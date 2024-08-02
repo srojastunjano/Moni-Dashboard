@@ -13,7 +13,7 @@ export const dummyMvt = [
     "amount": 2345,
     "currency": "CLP",
     "description": "arroz",
-    "date": "2024-01-01T00:00:00.000Z",
+    "date": "2023-10-01T00:00:00.000Z",
     "movementType": "EXPENSE",
     "category": "ALIMENTACION",
     "createdAt": "2024-07-12 09:53:53-04:00",

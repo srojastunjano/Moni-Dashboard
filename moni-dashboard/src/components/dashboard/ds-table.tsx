@@ -1,5 +1,6 @@
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/src/components/ui/table";
 import dummyMvt from "@/lib/dummyMvt";
+import moment from "moment";
 
 interface Movement {
   PK: string;
@@ -47,7 +48,7 @@ export default function Tables({ selectedCategory, data }: tableI) {
           <TableBody>
             {filteredData.map((mvt) => (
               <TableRow key={mvt.messageId}>
-                <TableCell className="py-1 px-1 text-xs sm:text-sm">{mvt.date}</TableCell>
+                <TableCell className="py-1 px-1 text-xs sm:text-sm">{moment(mvt.date).utc().format("YYYY-MM-DD")}</TableCell>
                 <TableCell className="py-1 px-1 text-xs sm:text-sm truncate max-w-[80px] sm:max-w-none">{mvt.description}</TableCell>
                 <TableCell className="py-1 px-1">
                   <span className="px-1 py-0.5 text-xs sm:text-sm bg-green-200 text-green-800 rounded-md whitespace-nowrap">

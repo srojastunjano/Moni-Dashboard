@@ -43,10 +43,10 @@ export default function Home() {
         <title>Moni</title>
       </head>
       <body>
-        <header className='bg-[rgb(69,194,100)] w-full py-4 p-[20px]'>
-          <nav className="z-[1000] text-center flex">
-            <h3 className="font-bold flex-1 ml-16">MIS FINANZAS!!</h3>
-            <p className="font-light flex-2 text-xs">
+        <header className='z-[1000] bg-[rgb(69,194,100)] w-full py-3 lg:w-[70%] lg:mx-auto lg:py-2'>
+          <nav className="text-center flex">
+            <h3 className="font-bold flex-1 ml-16 lg:text-4xl">MIS FINANZAS!!</h3>
+            <p className="font-light flex-2 text-xs mr-2">
               <AlgoMal/>
             </p>
           </nav>
@@ -54,10 +54,12 @@ export default function Home() {
         <main>
           <Cards/>
           <Charts chartCategory={selectedCategories} data={filteredData}/>
-          <nav className="py-4 bottom-0 left-0 fixed bg-[rgb(69,194,100)] w-full flex text-center justify-evenly z-[1000] overflow-hidden" >
-            <h3><Link href="/app/graficos">GRÁFICOS</Link></h3>
-            <h3><Link href="/tablas">TABLAS</Link></h3>
-            <h3><Link href="/">USUARIO</Link></h3>
+          <nav className="py-4 bottom-0 left-0 fixed bg-[rgb(69,194,100)] w-full flex justify-center text-center z-[1000] overflow-hidden lg:w-[70%] lg:left-1/2 lg:left-1/2 lg:transform lg:-translate-x-1/2 lg:py-2">
+            <div className="flex justify-evenly w-full lg:w-auto lg:flex-grow">
+              <h3><Link href="/app/graficos">GRÁFICOS</Link></h3>
+              <h3><Link href="/tablas">TABLAS</Link></h3>
+              <h3><Link href="/">USUARIO</Link></h3>
+            </div>
           </nav>
         </main>
       </body>

@@ -19,7 +19,7 @@ import DatePicker from "./ds-date";
 import Categories from "./ds-categories";
 import { useState, useEffect } from "react";
 import FixedDates from "./FixedDates";
-import LineChart from "./lineChart";
+import CumulativeChart from "./lineChart";
 import Menu from "./menu";
 
 interface Movement {
@@ -64,8 +64,7 @@ const chartConfig = {
 export default function Charts({ chartCategory, data }: chartI) {
   const [selectedCategory, setSelectedCategory] = useState<string[]>(chartCategory);
   const [aggregatedData, setAggregatedData] = useState<any[]>([]);
-  const [discreteData, setDiscreteData] = useState<any[]>([]);
-  const [cumulativeData, setCumulativeData] = useState<any[]>([]);
+  // const [discreteData, setDiscreteData] = useState<any[]>([]);
   const [dateRange, setDateRange] = useState<{ startDate?: Date, endDate?: Date }>({});
 
   useEffect(() => {
@@ -89,43 +88,24 @@ export default function Charts({ chartCategory, data }: chartI) {
       }));
     };
 
-    const processData = (data: Movement[]) => {
-      const dateTotals: { [key: string]: number } = {};
-      const dateCumulative: {[key: string]: number} = {}
+    // const discreteData = (data: Movement[]) => {
+    //   const dateTotals: { [key: string]: number } = {};
 
-      // not necessary to have it in a useEffect they all are caluclated
-      data.forEach(mvt => {
-        const { date, amount } = mvt; // extracts date & amount from mvt
-        if (dateTotals[date]) {
-          dateTotals[date] += amount;
-        } else {
-          dateTotals[date] = amount;
-        }
-      });
-      
-      // sort dates 
-      
-      // const sortedDates = Object.keys(dateTotals).sort((a, b) => new Date(a).getTime() - new Date(b).getTime());
-      const sortedDates = Object.keys(dateTotals).sort((a, b) => new Date(a).getTime() - new Date(b).getTime());
-      // Calculate cumulative totals
-      let cummulativeTotal = 0;
-      sortedDates.forEach(date => {
-        cummulativeTotal += dateTotals[date]
-        dateCumulative[date] = cummulativeTotal;
-      })
+    //   // not necessary to have it in a useEffect they all are caluclated
+    //   data.forEach(mvt => {
+    //     const { date, amount } = mvt; // extracts date & amount from mvt
+    //     if (dateTotals[date]) {
+    //       dateTotals[date] += amount;
+    //     } else {
+    //       dateTotals[date] = amount;
+    //     }
+    //   });
 
-      const discrete = sortedDates.map(date => ({
-        date,
-        date_total: dateTotals[date],
-      }));
-
-      const cumulative = Object.entries(dateCumulative).map(([date, date_total]) => ({
-        date,
-        date_total,
-      }));
-
-      return {discrete, cumulative}
-    }; 
+    //   return Object.entries(dateTotals).map(([date, date_total]) => ({
+    //     date,
+    //     date_total,
+    //   }));
+    // };
 
     let filtered = data;
 
@@ -144,14 +124,13 @@ export default function Charts({ chartCategory, data }: chartI) {
     }
 
     const aggregated = aggregateData(filtered);
-    const { discrete, cumulative } = processData(filtered);
+    // const discrete = discreteData(filtered)
     
     // Sort the aggregated data in descending order
-    const sortedAggregated = aggregated.sort((a, b) => b.category_total - a.category_total);
+    const sortedAggregated = aggregated.sort((a, b) => b.total - a.total);
     
     setAggregatedData(sortedAggregated);
-    setDiscreteData(discrete);
-    setCumulativeData(cumulative);
+    // setDiscreteData(discrete)
   }, [selectedCategory, dateRange, data]);
 
   const handleDateRangeChange = (startDate?: Date, endDate?: Date) => {
@@ -193,13 +172,13 @@ export default function Charts({ chartCategory, data }: chartI) {
                 tickFormatter={(value) => value}
                 hide
               />
-              <XAxis dataKey="category_total" type="number" hide />
+              <XAxis dataKey="total" type="number" hide />
               <ChartTooltip
                 cursor={false}
                 content={<ChartTooltipContent indicator="line" />}
               />
               <Bar
-                dataKey="category_total"
+                dataKey="total"
                 layout="vertical"
                 fill="var(--color-desktop)"
                 radius={40}
@@ -211,7 +190,7 @@ export default function Charts({ chartCategory, data }: chartI) {
                   className="fill-foreground md:text-2xl"
                 />
                 <LabelList
-                  dataKey="category_total"
+                  dataKey="total"
                   position="right"
                   offset={12}
                   className="fill-foreground  md:text-2xl"
@@ -221,7 +200,7 @@ export default function Charts({ chartCategory, data }: chartI) {
             </BarChart>
           </ChartContainer>
         </CardContent>
-        <LineChart discreteData={discreteData} cumulativeData={cumulativeData}/>
+        {/* <CumulativeChart discrete_Data={ discreteData }/> */}
         <CardFooter className="flex-col items-start gap-2 text-sm">
           {/* <div className="flex gap-2 font-medium leading-none">
             Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />

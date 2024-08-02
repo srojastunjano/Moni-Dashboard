@@ -31,10 +31,10 @@ export default function Categories({ selectedCategorys, setSelectedCategorys }: 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button
+      <Button
           variant="outline"
           role="combobox"
-          className="outline-none border-0 ring-0 focus:ring-0 w-[40%] h-[50%] mx-3 text-xs justify-between lg: w-[25%]"
+          className="outline-none border-0 ring-0 focus:ring-0 w-1/4 h-12 mx-3 text-xs md:text-lg flex items-center justify-center"
         >
           Categorias
         </Button>

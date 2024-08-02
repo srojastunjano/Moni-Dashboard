@@ -31,7 +31,6 @@ export default function FixedDates({ onDateRangeChange }: DatePickerProps) {
     const startDate = new Date();
     const endDate = new Date
     startDate.setMonth(startDate.getMonth() - 6);
-    // endDate.setMonth(endDate.getMonth())
     onDateRangeChange(startDate, endDate)
     return startDate;
   };
@@ -40,7 +39,6 @@ export default function FixedDates({ onDateRangeChange }: DatePickerProps) {
     const startDate = new Date();
     const endDate = new Date
     startDate.setMonth(startDate.getMonth() - 1);
-    // endDate.setMonth(endDate.getMonth())
     onDateRangeChange(startDate, endDate)
     return startDate;
   };
@@ -49,7 +47,6 @@ export default function FixedDates({ onDateRangeChange }: DatePickerProps) {
     const startDate = new Date();
     const endDate = new Date
     startDate.setMonth(startDate.getMonth() - 12);
-    // endDate.setMonth(endDate.getMonth())
     onDateRangeChange(startDate, endDate)
     return startDate;
   };
@@ -59,26 +56,26 @@ export default function FixedDates({ onDateRangeChange }: DatePickerProps) {
         <Button
           variant="outline"
           role="combobox"
-          className=" outline-none border-0 ring-0 focus:ring-0 w-[40%] h-[50%] mx-3 text-xs justify-between lg: w-[3%]"
+          className="outline-none border-0 ring-0 focus:ring-0 w-1/4 h-12 mx-3 text-xs md:text-lg flex items-center justify-center"
           onClick={OneMonths}
         >
-            1m
+          1m
         </Button>
         <Button
           variant="outline"
           role="combobox"
-          className="outline-none border-0 ring-0 focus:ring-0 w-[40%] h-[30%] mx-3 text-xs justify-between lg: w-[3%]"
+          className="outline-none border-0 ring-0 focus:ring-0 w-1/4 h-12 mx-3 text-xs md:text-lg flex items-center justify-center"
           onClick={SixMonths}
         >
-            6m
+          6m
         </Button>
         <Button
-              variant="outline"
-              role="combobox"
-              className=" outline-none border-0 ring-0 focus:ring-0 w-[40%] h-[30%] mx-3 text-xs justify-between lg: w-[3%]"
-              onClick={OneYear}
+          variant="outline"
+          role="combobox"
+          className="outline-none border-0 ring-0 focus:ring-0 w-1/4 h-12 mx-3 text-xs md:text-lg flex items-center justify-center"
+          onClick={OneYear}
         >
-            1y
+          1y
         </Button>
     </>
   )
