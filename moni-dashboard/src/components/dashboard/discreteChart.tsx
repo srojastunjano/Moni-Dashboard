@@ -2,7 +2,7 @@
 
 // Importing necessary components from Recharts and other libraries
 import { TrendingUp } from "lucide-react"
-import { CartesianGrid, Line, ComposedChart, XAxis, Bar, LabelList, Tooltip, ResponsiveContainer } from "recharts"
+import { CartesianGrid, Line, ComposedChart, XAxis, Bar, LabelList, Tooltip, ResponsiveContainer, YAxis } from "recharts"
 
 import {
   Card,
@@ -56,12 +56,11 @@ const chartConfig = {
 
 interface DiscreteDataProp {
   discreteData: { date: string; date_total: number }[];
-  cumulativeData: { date: string; date_cumulative: number }[];
 }
 
 
 // Main component function
-export default function LineChart({discreteData, cumulativeData}:DiscreteDataProp){
+export default function DiscreteChart({discreteData}:DiscreteDataProp){
   return (
     <Card>
       {/* Card header containing title and description */}
@@ -83,6 +82,16 @@ export default function LineChart({discreteData, cumulativeData}:DiscreteDataPro
               }}
             >
               <CartesianGrid vertical={true} />  {/* Grid lines for the chart */}
+              <YAxis
+                dataKey="date_total"
+                type="number"
+                tickLine={false}
+                tickMargin={10}
+                axisLine={false}
+                domain={['auto', 'auto']}
+                tickFormatter={(value) => value.toFixed(0)}
+                tickCount={12}
+              />
               <XAxis
                 dataKey="date"  // X-axis using month as data key
                 tickLine={false}  // Disable tick lines
@@ -94,12 +103,12 @@ export default function LineChart({discreteData, cumulativeData}:DiscreteDataPro
               
               {/* Bar component for desktop data */}
               <Bar dataKey="date_total" fill="var(--color-desktop)" radius={8}>
-                <LabelList
+                {/* <LabelList
                   position="top"  // Position labels at the top of bars
                   offset={12}  // Offset for labels
                   className="fill-foreground"
                   fontSize={12}  // Font size for labels
-                />
+                /> */}
               </Bar>
               
               {/* Line component for desktop data */}
@@ -116,44 +125,9 @@ export default function LineChart({discreteData, cumulativeData}:DiscreteDataPro
           </ResponsiveContainer>
         </ChartContainer>
       </CardContent>
-      <CardContent>
-        <ChartContainer config={chartConfig}>
-          <ResponsiveContainer width="100%" height={400}>
-            <ComposedChart
-              data={cumulativeData}  // Data for the chart
-              margin={{        // Margins for the chart
-                top: 20,
-                left: 12,
-                right: 12,
-              }}
-            >
-              <CartesianGrid vertical={true} />  {/* Grid lines for the chart */}
-              <XAxis
-                dataKey="date"  // X-axis using month as data key
-                tickLine={false}  // Disable tick lines
-                tickMargin={10}  // Margin for ticks
-                axisLine={false}  // Disable axis line
-                tickFormatter={(value) => value.slice(0, 3)}  // Format ticks to show first 3 letters
-              />
-              <Tooltip content={<ChartTooltipContent />} />  {/* Tooltip for the chart */}
-              
-              {/* Line component for desktop data */}
-              <Line
-                dataKey="date_total"
-                type="natural"  // Line type
-                stroke="var(--color-desktop)"  // Stroke color
-                strokeWidth={2}  // Stroke width
-                dot={{ fill: "var(--color-desktop)" }}  // Dot configuration
-                activeDot={{ r: 6 }}  // Active dot configuration
-              />
-              
-            </ComposedChart>
-          </ResponsiveContainer>
-        </ChartContainer>
-      </CardContent>
       
       {/* Card footer containing additional information */}
-      <CardFooter>
+      {/* <CardFooter>
         <div className="flex w-full items-start gap-2 text-sm">
           <div className="grid gap-2">
             <div className="flex items-center gap-2 font-medium leading-none">
@@ -164,10 +138,10 @@ export default function LineChart({discreteData, cumulativeData}:DiscreteDataPro
             </div>
           </div>
         </div>
-      </CardFooter>
+      </CardFooter> */}
     </Card>
   )
 }
 
 
-export {LineChart}
+export {DiscreteChart}

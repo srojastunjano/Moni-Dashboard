@@ -19,8 +19,11 @@ import DatePicker from "./ds-date";
 import Categories from "./ds-categories";
 import { useState, useEffect } from "react";
 import FixedDates from "./FixedDates";
-import LineChart from "./lineChart";
-import Menu from "./menu";
+import { DiscreteChart } from "./discreteChart";
+import { Filters } from "./Filters";
+import CumulativeChart from "./cumulativeChart";
+import CategoryChart from "./categoryChart";
+import Cards from "./ds-cards";
 
 interface Movement {
   PK: string;
@@ -159,75 +162,32 @@ export default function Charts({ chartCategory, data }: chartI) {
   };
 
   return (
-    <div className="flex justify-center lg:w-[66%] lg:m-auto">
-      <Card className="space-x-2 px-4 w-full mb-40">
-        <CardHeader className="flex flex-col">
-          <CardTitle className="my-2 text-center">
-            <h1 className="md:text-5xl">
-              Tus Gastos
-            </h1>
-          </CardTitle>
-          <CardDescription className="text-center">
-          <Menu
-              handleDateRangeChange={handleDateRangeChange}
-              selectedCategories={selectedCategory}
-              setSelectedCategories={setSelectedCategory}
-            />
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <ChartContainer config={chartConfig}>
-            <BarChart
-              data={aggregatedData} // Use aggregatedData for the chart
-              layout="vertical"
-              margin={{ right: 65 }}
-              barCategoryGap={200}
-            >
-              <CartesianGrid horizontal={false} />
-              <YAxis
-                dataKey="category"
-                type="category"
-                tickLine={false}
-                tickMargin={10}
-                axisLine={false}
-                tickFormatter={(value) => value}
-                hide
+    <div className="flex flex-col justify-center lg:w-[100%] lg:m-auto">
+      {/* <Card className="space-x-2 px-4 w-full mb-40"> */}
+      <div className="flex flex-col min-h-screen">
+        <main className="flex-1 container mx-auto grid grid-cols-1 md:grid-cols-[3fr_2fr] gap-8 py-8 px-6">
+          <div className="space-y-8">
+            <Card className="bg-[#d0f0c0] rounded-lg shadow overflow-hidden h-full">
+              <Cards/>
+              <Filters
+                handleDateRangeChange={handleDateRangeChange}
+                selectedCategories={selectedCategory}
+                setSelectedCategories={setSelectedCategory}
               />
-              <XAxis dataKey="category_total" type="number" hide />
-              <ChartTooltip
-                cursor={false}
-                content={<ChartTooltipContent indicator="line" />}
-              />
-              <Bar
-                dataKey="category_total"
-                layout="vertical"
-                fill="var(--color-desktop)"
-                radius={40}
-              >
-                <LabelList
-                  dataKey="category"
-                  position="insideLeft"
-                  offset={10}
-                  className="fill-foreground md:text-2xl"
-                />
-                <LabelList
-                  dataKey="category_total"
-                  position="right"
-                  offset={12}
-                  className="fill-foreground  md:text-2xl"
-                  fontSize={12}
-                />
-              </Bar>
-            </BarChart>
-          </ChartContainer>
-        </CardContent>
-        <LineChart discreteData={discreteData} cumulativeData={cumulativeData}/>
-        <CardFooter className="flex-col items-start gap-2 text-sm">
-          {/* <div className="flex gap-2 font-medium leading-none">
-            Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
-          </div> */}
-        </CardFooter>
-      </Card>
+              <CumulativeChart cumulativeData={cumulativeData}/>
+            </Card>
+          </div>
+          <div className="space-y-8">
+            <Card className="bg-[#d0f0c0]">
+              <CategoryChart aggregatedData={aggregatedData}/>
+            </Card>
+            <Card className="bg-[#d0f0c0]">
+              <DiscreteChart discreteData={discreteData}/>
+            </Card>
+          </div>
+        </main>
+      </div>
+      {/* </Card> */}
     </div>
   );
 }

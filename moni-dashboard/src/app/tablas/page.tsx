@@ -19,7 +19,7 @@ import {
 import { useState, useEffect } from "react";
 import { Card, CardHeader } from "@/src/components/ui/card";
 import FixedDates from "@/src/components/dashboard/FixedDates";
-import Menu from "@/src/components/dashboard/menu";
+import Menu from "@/src/components/dashboard/Filters";
 
 export default function Home() {
     const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
