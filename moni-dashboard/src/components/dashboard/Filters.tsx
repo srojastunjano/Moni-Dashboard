@@ -15,14 +15,14 @@ export default function Filters({handleDateRangeChange, selectedCategories, setS
         <>
             <div className="flex flex-row justify-center w-full">
                 <Card className="mt-1 justify-center w-full h-auto my-1.5 bg-white border border-gray-300 rounded-lg shadow-md">
-                    <CardHeader className="p-0 justify-center flex flex-wrap sm:space-x-">
+                    <CardHeader className="p-0 justify-center space-around flex flex-wrap sm:space-x-">
                         {/* <FixedDates onDateRangeChange={handleDateRangeChange}/> */}
                         <DatePicker onDateRangeChange={handleDateRangeChange} />
                         <Categories
-                            selectedCategorys={selectedCategories}
-                            setSelectedCategorys={setSelectedCategories}
+                            selectedCategories={selectedCategories}
+                            setSelectedCategories={setSelectedCategories}
                         />
-                        <Reset onDateRangeChange={handleDateRangeChange}/>
+                        {/* <Reset onDateRangeChange={handleDateRangeChange}/> */}
                     </CardHeader>
                 </Card>
             </div>

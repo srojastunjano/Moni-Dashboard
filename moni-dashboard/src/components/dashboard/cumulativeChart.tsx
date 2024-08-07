@@ -43,7 +43,7 @@ interface Movement {
   
 export default function CumulativeChart({cumulativeData}: CumulativeDataProp){
     return (
-        <Card className="h-full ">
+        <Card>
             <CardContent className="my-5">
                 <ChartContainer config={chartConfig}>
                     <ResponsiveContainer width="100%" className="h-full">

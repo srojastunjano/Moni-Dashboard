@@ -165,7 +165,7 @@ export default function Charts({ chartCategory, data }: chartI) {
     <div className="flex flex-col justify-center lg:w-[100%] lg:m-auto">
       {/* <Card className="space-x-2 px-4 w-full mb-40"> */}
       <div className="flex flex-col min-h-screen">
-        <main className="flex-1 container mx-auto grid grid-cols-1 md:grid-cols-[3fr_2fr] gap-8 py-8 px-6">
+        <main className="flex-1 container mx-auto grid grid-cols-1 md:grid-cols-[3fr_2fr] gap-8 py-8 px-6 lg:py-0 lg:pt-2 lg:py-2">
           <div className="space-y-8">
             <Card className="bg-[#d0f0c0] rounded-lg shadow overflow-hidden h-full">
               <Cards/>

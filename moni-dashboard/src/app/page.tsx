@@ -133,7 +133,7 @@ export default function Home() {
             </main>
           </div>
            {/* Mobile Nav */}
-          <nav className="fixed bottom-0 z-40 flex w-full items-center justify-around border-t bg-background px-4 py-3 md:hidden">
+            <nav className="fixed bottom-0 z-40 flex w-full items-center justify-around border-t bg-background px-4 py-3 md:hidden">
             <Link
               href="/"
               className="flex flex-col items-center gap-1 text-muted-foreground transition-colors hover:text-foreground"
@@ -150,7 +150,7 @@ export default function Home() {
               <TableIcon className="h-5 w-5" />
               <span className="text-xs">Tablas</span>
             </Link>
-          </nav>
+            </nav>
         </div>
         </body>
       </>
