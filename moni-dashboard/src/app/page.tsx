@@ -21,7 +21,9 @@ import Charts from "../components/dashboard/ds-charts";
 // Main Page
 export default function Home() {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
-    const [filteredData, setFilteredData] = useState(dummyMvt);
+  const [filteredData, setFilteredData] = useState(dummyMvt);
+  const [activeSkeleton, setActiveSkeleton] = useState<boolean>(true);
+  
     const [dateRange, setDateRange] = useState<{ startDate?: Date, endDate?: Date }>({});
   
     const handleDateRangeChange = (startDate?: Date, endDate?: Date) => {
@@ -45,6 +47,7 @@ export default function Home() {
       }
 
       setFilteredData(filtered);
+      setActiveSkeleton(false);
     }, [dateRange, selectedCategories]);
   return (
       <>
@@ -53,7 +56,7 @@ export default function Home() {
         </head>
         <body>
           <div className="flex h-screen w-full flex-col bg-background">
-          <header className="sticky top-0 z-40 border-b bg-background px-4 py-3 md:hidden">
+          <header className="hidden sticky top-0 z-40 border-b bg-background px-4 py-0 md:block md:py-4 xl:hidden">
             <div className="flex items-center justify-between">
               {/* Moni Logo */}
               <Link href="/" className="flex items-center gap-2" prefetch={false}>
@@ -74,7 +77,7 @@ export default function Home() {
                       <BarChartIcon className="h-5 w-5" />
                         Gráfica
                     </Link>
-                    <Link href="#" className="flex items-center gap-2 font-medium" prefetch={false}>
+                    <Link href="./tablas" className="flex items-center gap-2 font-medium" prefetch={false}>
                       <TableIcon className="h-5 w-5" />
                         Tablas
                     </Link>
@@ -85,7 +88,7 @@ export default function Home() {
           </header>
           <div className="flex flex-1">
             {/* Closed Nav Bar */}
-            <nav className="hidden h-full w-14 flex-col border-r bg-background md:flex">
+            <nav className="hidden h-full w-14 flex-col border-r bg-background md:flex md:hidden xl:block">
               <div className="flex flex-1 flex-col items-center gap-4 px-2 py-5">
                 <Link
                   href="/"
@@ -114,7 +117,7 @@ export default function Home() {
                   <Tooltip>
                     <TooltipTrigger asChild>
                       <Link
-                        href="#"
+                        href="./tablas"
                         className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground"
                         prefetch={false}
                       >
@@ -127,13 +130,17 @@ export default function Home() {
                 </TooltipProvider>
               </div>
             </nav>
-            <main className="flex-1 px-4 pt-6 md:px-6">
-              <h1 className="text-2xl font-bold">HeyMoni</h1>
-              <Charts chartCategory={selectedCategories} data={filteredData}/>
+            <main className="flex-1 px-1 pt-6 md:px-7 md:pt-2">
+              <h1 className="text-customBlue text-2xl ml-2 font-bold md:text-4xl lg:ml-7 lg:mt-2 xl:text-2xl xl:ml-0">HeyMoni</h1>
+              {activeSkeleton ?
+                <p>CARGANDO DATOS</p>  
+                :  
+              <Charts chartCategory={selectedCategories} data={filteredData} rawData={dummyMvt}/>
+            }
             </main>
           </div>
            {/* Mobile Nav */}
-            <nav className="fixed bottom-0 z-40 flex w-full items-center justify-around border-t bg-background px-4 py-3 md:hidden">
+            <nav className="fixed bottom-0 z-40 py-3 flex w-full items-center justify-around border-t bg-background px-4 py-3 md:py-2 xl:hidden">
             <Link
               href="/"
               className="flex flex-col items-center gap-1 text-muted-foreground transition-colors hover:text-foreground"
@@ -143,7 +150,7 @@ export default function Home() {
               <span className="text-xs">Gráfica</span>
             </Link>
             <Link
-              href="#"
+              href="./tablas"
               className="flex flex-col items-center gap-1 text-muted-foreground transition-colors hover:text-foreground"
               prefetch={false}
             >
@@ -178,51 +185,6 @@ function LineChartIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>)
   )
 }
 
-
-function TableIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M12 3v18" />
-      <rect width="18" height="18" x="3" y="3" rx="2" />
-      <path d="M3 9h18" />
-      <path d="M3 15h18" />
-    </svg>
-  )
-}
-
-
-function MailIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <rect width="20" height="16" x="2" y="4" rx="2" />
-      <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-    </svg>
-  )
-}
-
-
 function MenuIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
   return (
     <svg
@@ -244,56 +206,12 @@ function MenuIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
   )
 }
 
-function PackageIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
+function BarChartIcon(props: JSX.IntrinsicAttributes & React.SVGProps<SVGSVGElement>) {
   return (
     <svg
       {...props}
       xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="m7.5 4.27 9 5.15" />
-      <path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z" />
-      <path d="m3.3 7 8.7 5 8.7-5" />
-      <path d="M12 22V12" />
-    </svg>
-  )
-}
-
-
-function SettingsIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" />
-      <circle cx="12" cy="12" r="3" />
-    </svg>
-  )
-}
-
-function BarChartIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
+      className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 lg:w-10 lg:h-10 xl:w-5 xl:h-5"
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
@@ -304,6 +222,29 @@ function BarChartIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) 
       <line x1="12" x2="12" y1="20" y2="10" />
       <line x1="18" x2="18" y1="20" y2="4" />
       <line x1="6" x2="6" y1="20" y2="16" />
+    </svg>
+  );
+}
+
+function TableIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      className="w-6 h-6 sm:w-8 sm:h-8 md:w-8 md:h-8 xl:w-5 xl:h-5"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M12 3v18" />
+      <rect width="18" height="18" x="3" y="3" rx="2" />
+      <path d="M3 9h18" />
+      <path d="M3 15h18" />
     </svg>
   )
 }

@@ -32,19 +32,22 @@ export default function FancyMultiSelect({selectedCategories, setSelectedCategor
     //   return categories.filter((s) => s !== framework);
     // };
     // setSelectCategories toma un string[] pero le estoy pasando una funcion. Tengo que pasarlo a un const primero
-    setSelectedCategories((prev: string[]) => prev.filter((s) => s !== framework));
+    const updatedCategories = selectedCategories.filter((s) => s !== framework);
+    setSelectedCategories(updatedCategories);
   }, [setSelectedCategories]);
+
+
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLDivElement>) => {
       const input = inputRef.current;
       if (input) {
         if (e.key === "Delete" || e.key === "Backspace") {
-          if (input === "") {
-            setSelectedCategories((prev) => {
-              const newSelected = [...prev];
-              newSelected.pop();
-              return newSelected;
+          if (input.value === "") {
+            setSelectedCategories(prev => {
+              const newSelectedCategories = [...prev];
+              newSelectedCategories.pop();
+              return newSelectedCategories;
             });
           }
         }
@@ -54,7 +57,7 @@ export default function FancyMultiSelect({selectedCategories, setSelectedCategor
         }
       }
     },
-    []
+    [setSelectedCategories]  // Add setSelectedCategories to the dependency array
   );
 
   const selectables = categorias.filter(
@@ -70,7 +73,7 @@ export default function FancyMultiSelect({selectedCategories, setSelectedCategor
         className="bg-transparent outline-none border-0 ring-0 text-xs mt-2" // outline-none border-0 ring-0 focus:ring-0 w-1/4 h-12 mx-3 text-xs flex items-center justify-center
       >
         <div className="group rounded-md border border-input px-3 py-2 text-sm ring-offset-background focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2">
-          <div className="flex flex-wrap gap-1">
+          <div className="flex flex-wrap gap-1 lg:py-1 lg:px-3 xl:py-0 xl:px-0">
             {selectedCategories.map((category) => {
               return (
                 <Badge key={category} variant="secondary">
@@ -101,7 +104,7 @@ export default function FancyMultiSelect({selectedCategories, setSelectedCategor
               onBlur={() => setOpen(false)}
               onFocus={() => setOpen(true)}
               placeholder="Categorias..."
-              className="ml-2 flex-1 bg-transparent outline-none placeholder:text-muted-foreground"
+              className="ml-2 flex-1 bg-transparent outline-none placeholder:text-muted-foreground px-2"
             />
           </div>
         </div>
@@ -120,7 +123,8 @@ export default function FancyMultiSelect({selectedCategories, setSelectedCategor
                         }}
                         onSelect={(value) => {
                           setInputValue("");
-                          setSelectedCategories((prev) => [...prev, category]);
+                          const updatedCategories = [...selectedCategories, category];
+                          setSelectedCategories(updatedCategories);
                         }}
                         className={"cursor-pointer"}
                       >

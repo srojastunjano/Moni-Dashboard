@@ -30,55 +30,65 @@ interface Movement {
   }
   
   interface cardProp {
-    chartCategory: string[];
     data: Movement[];
   }
 
-export default function Cards() {
-    // const [dateRange, setDateRange] = useState<{ startDate?: Date, endDate?: Date }>({});
-    // const [selectedCategory, setSelectedCategory] = useState<string[]>(chartCategory);
-    
-    // useEffect(() => {
-    //     // Filter by date range
-    //     const { startDate, endDate } = dateRange;
-    //     if (startDate && endDate) {
-    //       data = data.filter(item => {
-    //         const itemDate = new Date(item.date);
-    //         return itemDate >= startDate && itemDate <= endDate;
-    //       });
-    //     }
-    
-    //     // Filter by category
-    //     if (selectedCategory.length > 0) {
-    //       data = data.filter(mvt => selectedCategory.includes(mvt.category));
-    //     }
-        
-    //   }, [selectedCategory, dateRange, data]);
+export default function Cards({data}: cardProp) {
 
-    // const handleDateRangeChange = (startDate?: Date, endDate?: Date) => {
-    //     setDateRange({ startDate, endDate });
-    //   };
+    const [gastosTotals, setGastos] = useState(0);
+    const [ingresos, setIngresos] = useState(0);
+    const [balance, setBalance] = useState(0);
+    useEffect(() => {
+
+        let gastosTotals = 0;
+        let ingresos = 0;
+        
+        data.forEach(mvt => {
+            const { category, amount } = mvt; // extracts category & amount from mvt
+            if (category !== "AHORROS" && category !== "INGRESO") {
+                gastosTotals += amount
+                } else {
+                    ingresos += amount; // Add to the otherCategoriesTotal variable
+                }
+            })
+        
+        const balance = ingresos - gastosTotals
+
+        setGastos(gastosTotals);
+        setIngresos(ingresos);
+        setBalance(balance);
+    }, [data]);
+
+
     return (
         <div className="w-full lg:w-[100%] mx-auto">         
             <div className="flex justify-around my-2 flex-row items-center space-x-2 px-4">
-                <Card className="w-[30%] h-[100%] my-1.5 bg-white border border-gray-300 rounded-lg shadow-md">
-                    <CardHeader className="flex-col text-center">
-                        <CardTitle className="text-md">Gastos</CardTitle>
-                        <CardDescription className="text-sm">$450,000</CardDescription>
-                    </CardHeader>
-                </Card>
-                <Card className="w-[30%] my-1.5 bg-white border border-gray-300 rounded-lg shadow-md">
-                    <CardHeader className="flex-col text-center">
-                        <CardTitle className="text-md">Ingreso</CardTitle>
-                        <CardDescription className="text-sm">$4,500,000</CardDescription>
-                    </CardHeader>
-                </Card>
-                <Card className="w-[30%] my-1.5 bg-white border border-gray-300 rounded-lg shadow-md">
-                    <CardHeader className="flex-col text-center">
-                        <CardTitle className="text-md">Balance</CardTitle>
-                        <CardDescription className="text-sm">$450,000</CardDescription>
-                    </CardHeader>
-                </Card>
+            <Card className="w-[30%] h-[100%] my-1.5 bg-white border border-gray-300 rounded-lg shadow-md">
+                <CardHeader className="flex flex-col justify-center items-center text-center h-full">
+                    <CardTitle className="text-customColor text-md lg:text-2xl xl:text-md">Gastos</CardTitle>
+                    <CardDescription className="text-sm lg:text-lg xl:text-sm flex justify-center items-center h-full">
+                        {gastosTotals.toLocaleString('en-US')}
+                    </CardDescription>
+                </CardHeader>
+            </Card>
+
+            <Card className="w-[30%] h-[100%] my-1.5 bg-white border border-gray-300 rounded-lg shadow-md">
+                <CardHeader className="flex flex-col justify-center items-center text-center h-full">
+                    <CardTitle className="text-customColor text-md lg:text-2xl xl:text-md">Ingreso</CardTitle>
+                    <CardDescription className="text-sm lg:text-lg xl:text-sm flex justify-center items-center h-full">
+                        {ingresos.toLocaleString('en-US')}
+                    </CardDescription>
+                </CardHeader>
+            </Card>
+
+            <Card className="w-[30%] h-[100%] my-1.5 bg-white border border-gray-300 rounded-lg shadow-md">
+                <CardHeader className="flex flex-col justify-center items-center text-center h-full">
+                    <CardTitle className="text-customColor text-md lg:text-2xl xl:text-md">Balance</CardTitle>
+                    <CardDescription className="text-sm lg:text-lg xl:text-sm flex justify-center items-center h-full">
+                        {balance.toLocaleString('en-US')}
+                    </CardDescription>
+                </CardHeader>
+            </Card>
                 {/* <Menu
                     handleDateRangeChange={handleDateRangeChange}
                     selectedCategories={selectedCategory}

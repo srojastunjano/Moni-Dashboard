@@ -333,7 +333,7 @@ export const DateRangePicker: FC<DateRangePickerProps> & {
       }}
     >
       <PopoverTrigger asChild>
-        <Button className="outline-none border-0 ring-0 focus:ring-0 w-1/4 h-12 mx-3 text-xs flex items-center justify-center mt-1" size={'lg'} variant="outline">
+        <Button className="outline-none border-0 ring-0 focus:ring-0 mx-3 text-xs flex items-center justify-center mt-2 ml:10 lg:text-lg xl:text-base" variant="outline">
           <div className="text-right">
             <div className="py-1">
               <div>{`${formatDate(range.from, locale)}${

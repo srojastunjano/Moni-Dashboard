@@ -61,12 +61,20 @@ interface DiscreteDataProp {
 
 // Main component function
 export default function DiscreteChart({discreteData}:DiscreteDataProp){
+  if (!discreteData.length) {
+    return <div>No data available</div>;
+  }
+
+  const dateRangeInDays =
+    (new Date(discreteData[discreteData.length - 1]?.date).getTime() -
+      new Date(discreteData[0]?.date).getTime()) /
+    (1000 * 60 * 60 * 24);
+
   return (
     <Card>
       {/* Card header containing title and description */}
       <CardHeader className="flex flex-col">
-        <CardTitle>Line and Bar Chart</CardTitle>
-        <CardDescription>January - June 2024</CardDescription>
+        <CardTitle className="text-customColor">Gastos Discretos</CardTitle>
       </CardHeader>
       
       {/* Card content containing the chart */}
@@ -93,11 +101,30 @@ export default function DiscreteChart({discreteData}:DiscreteDataProp){
                 tickCount={12}
               />
               <XAxis
-                dataKey="date"  // X-axis using month as data key
-                tickLine={false}  // Disable tick lines
-                tickMargin={10}  // Margin for ticks
-                axisLine={false}  // Disable axis line
-                tickFormatter={(value) => value.slice(0, 3)}  // Format ticks to show first 3 letters
+                 dataKey="date"
+                 tickLine={false}
+                 tickMargin={5}
+                 axisLine={false}
+                 tickFormatter={(value) => {
+                   const date = new Date(value);
+ 
+                   // Conditional formatting based on date range
+                   if (dateRangeInDays > 180) {
+                     // Long term (more than ~6 months)
+                     return date.toLocaleString("default", {
+                       month: "short",
+                       year: "numeric",
+                     });
+                   } else {
+                     // Short term
+                     return date.toLocaleString("default", {
+                       month: "short",
+                       day: "numeric",
+                     });
+                   }
+                 }}
+                 tick={{ fontSize: 8 }}
+                 interval={"preserveStartEnd"}
               />
               <Tooltip content={<ChartTooltipContent />} />  {/* Tooltip for the chart */}
               

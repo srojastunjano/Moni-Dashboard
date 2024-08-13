@@ -28,11 +28,8 @@ export default function CategoryChart({ aggregatedData }: CategoryDataProp){
     return(
         <Card>
           <CardHeader className="flex flex-col">
-            {/* <CardTitle className="my-2 text-center">  // CardTitle is H3 i am adding h3
-              <h1 className="md:text-5xl">
-                Tus Gastos
-              </h1>
-            </CardTitle> */}
+                <CardTitle className="text-customColor">Gastos por Categoria</CardTitle>
+                {/* <CardDescription>Texto Aqui</CardDescription> */}
             <CardDescription className="text-center">
             </CardDescription>
           </CardHeader>
@@ -73,14 +70,15 @@ export default function CategoryChart({ aggregatedData }: CategoryDataProp){
                         dataKey="category_total"
                         layout="vertical"
                         fill="var(--color-desktop)"
-                        radius={10}
-                          
+                        radius={40}
+                        stroke="#FFFFFF" 
+                        strokeWidth={2}
                         >
                         <LabelList
                             dataKey="category"
                             position="insideLeft"
-                            offset={10}
-                            className="fill-foreground md:text-2xl"
+                            offset={7}
+                            className="fill-foreground md:text-sm"
                         />
                         {/* <LabelList
                             dataKey="category_total"

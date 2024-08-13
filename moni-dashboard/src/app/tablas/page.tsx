@@ -16,13 +16,17 @@ import {
   MenubarTrigger,
 } from "@/src/components/ui/menubar"
 
-import { useState, useEffect } from "react";
-import { Card, CardHeader } from "@/src/components/ui/card";
+import { useState, useEffect, SVGProps } from "react";
+import { Card, CardContent, CardHeader } from "@/src/components/ui/card";
 import FixedDates from "@/src/components/dashboard/FixedDates";
-import Menu from "@/src/components/dashboard/Filters";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Button } from "@/src/components/ui/button";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import Cards from "@/src/components/dashboard/ds-cards";
+import Filters from "@/src/components/dashboard/Filters";
 
 export default function Home() {
-    const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
     const [filteredData, setFilteredData] = useState(dummyMvt);
     const [dateRange, setDateRange] = useState<{ startDate?: Date, endDate?: Date }>({});
   
@@ -48,41 +52,208 @@ export default function Home() {
 
       setFilteredData(filtered);
     }, [dateRange, selectedCategories]);
-  
-    return (
+  return (
       <>
         <head>
-          <title>Moni</title>
+          <title>HeyMoni</title>
         </head>
         <body>
-          <header className='z-[1000] bg-[rgb(69,194,100)] w-full py-3 lg:w-[70%] lg:mx-auto lg:py-2'>
-            <nav className="text-center flex">
-              <h3 className="font-bold flex-1 ml-16">MIS FINANZAS!!</h3>
-              <p className="font-light flex-2 text-xs mr-2">
-                <AlgoMal/>
-              </p>
-            </nav>
+          <div className="flex h-screen w-full flex-col bg-background">
+          <header className="hidden sticky top-0 z-40 border-b bg-background px-4 py-0 md:block md:py-4 xl:hidden">
+            <div className="flex items-center justify-between">
+              {/* Moni Logo */}
+              <Link href="/" className="flex items-center gap-2" prefetch={false}>
+                <LineChartIcon className="h-6 w-6" />
+                <span className="sr-only">HeyMoni</span>
+              </Link>
+              {/* Opened Nav Bar */}
+              <Sheet>
+                <SheetTrigger asChild>
+                  <Button size="icon" variant="ghost">
+                    <MenuIcon className="h-15 w-600" />
+                    <span className="sr-only">Toggle navigation</span>
+                  </Button>
+                </SheetTrigger>
+                <SheetContent side="left" className="sm:max-w-xs">
+                  <nav className="grid gap-4 px-4 py-6">
+                    <Link href="/" className="flex items-center gap-2 font-medium" prefetch={false}>
+                      <BarChartIcon className="h-5 w-5" />
+                        Gráfica
+                    </Link>
+                    <Link href="./tablas" className="flex items-center gap-2 font-medium" prefetch={false}>
+                      <TableIcon className="h-5 w-5" />
+                        Tablas
+                    </Link>
+                  </nav>
+                </SheetContent>
+              </Sheet>
+            </div>
           </header>
-          <main>
-            <div className="lg:w-[65%] lg:mx-auto">
-              <Menu
-                handleDateRangeChange={handleDateRangeChange}
-                selectedCategories={selectedCategories}
-                setSelectedCategories={setSelectedCategories}
-              />
-            </div>
-            <div className="w-full max-w-4xl mx-auto px-4">
-              <Tables selectedCategory={selectedCategories.length === 1 ? selectedCategories[0] : "TODAS"} data={filteredData} />
-            </div>
-            <nav className="py-4 bottom-0 left-0 fixed bg-[rgb(69,194,100)] w-full flex justify-center text-center z-[1000] overflow-hidden lg:w-[70%] lg:left-1/2 lg:left-1/2 lg:transform lg:-translate-x-1/2 lg:py-2">
-              <div className="flex justify-evenly w-full lg:w-auto lg:flex-grow">
-                <h3><Link href="/app/graficos">GRÁFICOS</Link></h3>
-                <h3><Link href="/tablas">TABLAS</Link></h3>
-                <h3><Link href="/">USUARIO</Link></h3>
+          <div className="flex flex-1">
+            {/* Closed Nav Bar */}
+            <nav className="hidden h-full w-14 flex-col border-r bg-background md:flex md:hidden xl:block">
+              <div className="flex flex-1 flex-col items-center gap-4 px-2 py-5">
+                <Link
+                  href="/"
+                  className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary text-lg font-semibold text-primary-foreground"
+                  prefetch={false}
+                >
+                  <LineChartIcon className="h-5 w-5" />
+                  <span className="sr-only">HeyMoni</span>
+                </Link>
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Link
+                        href="/"
+                        className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground"
+                        prefetch={false}
+                      >
+                        <BarChartIcon className="h-5 w-5" />
+                        <span className="sr-only">Gráfica</span>
+                      </Link>
+                    </TooltipTrigger>
+                    <TooltipContent side="right">Gráfica</TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Link
+                        href="./tablas"
+                        className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground"
+                        prefetch={false}
+                      >
+                        <TableIcon className="h-5 w-5" />
+                        <span className="sr-only">Tablas</span>
+                      </Link>
+                    </TooltipTrigger>
+                    <TooltipContent side="right">Tablas</TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
               </div>
             </nav>
-          </main>
+            <main className="flex-1 px-4 pt-2 md:px-7">
+              <h1 className="text-customBlue text-2xl font-bold lg:ml-1 xl:ml-2">HeyMoni</h1>
+              {/* <Card>
+                <CardContent> */}
+                  <Cards data={filteredData} />
+                  <Filters
+                    handleDateRangeChange={handleDateRangeChange}
+                    selectedCategories={selectedCategories}
+                    setSelectedCategories={setSelectedCategories}
+                  />
+                {/* </CardContent>
+              </Card> */}
+              <Tables selectedCategory={selectedCategories.length === 1 ? selectedCategories[0] : "TODAS"} data={filteredData} />
+            </main>
+          </div>
+           {/* Mobile Nav */}
+            <nav className="fixed bottom-0 z-40 py-3 flex w-full items-center justify-around border-t bg-background px-4 py-3 md:py-2 xl:hidden">
+            <Link
+              href="/"
+              className="flex flex-col items-center gap-1 text-muted-foreground transition-colors hover:text-foreground"
+              prefetch={false}
+            >
+              <BarChartIcon className="h-5 w-5" />
+              <span className="text-xs">Gráfica</span>
+            </Link>
+            <Link
+              href="./tablas"
+              className="flex flex-col items-center gap-1 text-muted-foreground transition-colors hover:text-foreground"
+              prefetch={false}
+            >
+              <TableIcon className="h-5 w-5" />
+              <span className="text-xs">Tablas</span>
+            </Link>
+            </nav>
+        </div>
         </body>
       </>
-    );
-  }
+  )
+}
+
+
+function LineChartIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M3 3v18h18" />
+      <path d="m19 9-5 5-4-4-3 3" />
+    </svg>
+  )
+}
+
+function MenuIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <line x1="4" x2="20" y1="12" y2="12" />
+      <line x1="4" x2="20" y1="6" y2="6" />
+      <line x1="4" x2="20" y1="18" y2="18" />
+    </svg>
+  )
+}
+
+function BarChartIcon(props: JSX.IntrinsicAttributes & React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 lg:w-10 lg:h-10 xl:w-5 xl:h-5"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <line x1="12" x2="12" y1="20" y2="10" />
+      <line x1="18" x2="18" y1="20" y2="4" />
+      <line x1="6" x2="6" y1="20" y2="16" />
+    </svg>
+  );
+}
+
+function TableIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      className="w-6 h-6 sm:w-8 sm:h-8 md:w-8 md:h-8 xl:w-5 xl:h-5"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M12 3v18" />
+      <rect width="18" height="18" x="3" y="3" rx="2" />
+      <path d="M3 9h18" />
+      <path d="M3 15h18" />
+    </svg>
+  )
+}

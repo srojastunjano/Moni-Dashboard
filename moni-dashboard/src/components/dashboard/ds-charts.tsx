@@ -48,6 +48,7 @@ interface Movement {
 interface chartI {
   chartCategory: string[];
   data: Movement[];
+  rawData: Movement[];
 }
 
 const chartConfig = {
@@ -64,9 +65,10 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export default function Charts({ chartCategory, data }: chartI) {
+export default function Charts({ chartCategory, data, rawData }: chartI) {
   const [selectedCategory, setSelectedCategory] = useState<string[]>(chartCategory);
   const [aggregatedData, setAggregatedData] = useState<any[]>([]);
+  const [filteredData, setFilteredData] = useState<any[]>([]);
   const [discreteData, setDiscreteData] = useState<any[]>([]);
   const [cumulativeData, setCumulativeData] = useState<any[]>([]);
   const [dateRange, setDateRange] = useState<{ startDate?: Date, endDate?: Date }>({});
@@ -155,6 +157,7 @@ export default function Charts({ chartCategory, data }: chartI) {
     setAggregatedData(sortedAggregated);
     setDiscreteData(discrete);
     setCumulativeData(cumulative);
+    setFilteredData(filtered)
   }, [selectedCategory, dateRange, data]);
 
   const handleDateRangeChange = (startDate?: Date, endDate?: Date) => {
@@ -164,11 +167,11 @@ export default function Charts({ chartCategory, data }: chartI) {
   return (
     <div className="flex flex-col justify-center lg:w-[100%] lg:m-auto">
       {/* <Card className="space-x-2 px-4 w-full mb-40"> */}
-      <div className="flex flex-col min-h-screen">
-        <main className="flex-1 container mx-auto grid grid-cols-1 md:grid-cols-[3fr_2fr] gap-8 py-8 px-6 lg:py-0 lg:pt-2 lg:py-2">
+      <div className="flex flex-col"> {/* sm:min-h-screen  */}
+        <main className="flex-1 container mx-auto grid grid-cols-1 mb-20 xl:grid-cols-[3fr_2fr] gap-4 pt-2 px-0 lg:gap-8 lg:pt-2 lg:pt-2 lg:mb-17 xl:mb-5">
           <div className="space-y-8">
-            <Card className="bg-[#d0f0c0] rounded-lg shadow overflow-hidden h-full">
-              <Cards/>
+            <Card className="bg-[rgba(51,153,118,255)] rounded-lg shadow overflow-hidden h-full">
+              <Cards data={filteredData}/>
               <Filters
                 handleDateRangeChange={handleDateRangeChange}
                 selectedCategories={selectedCategory}
@@ -177,12 +180,12 @@ export default function Charts({ chartCategory, data }: chartI) {
               <CumulativeChart cumulativeData={cumulativeData}/>
             </Card>
           </div>
-          <div className="space-y-8">
-            <Card className="bg-[#d0f0c0]">
-              <CategoryChart aggregatedData={aggregatedData}/>
-            </Card>
+          <div className="space-y-4">
             <Card className="bg-[#d0f0c0]">
               <DiscreteChart discreteData={discreteData}/>
+            </Card>
+            <Card className="bg-[#d0f0c0]">
+              <CategoryChart aggregatedData={aggregatedData}/>
             </Card>
           </div>
         </main>
