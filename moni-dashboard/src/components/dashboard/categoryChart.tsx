@@ -1,7 +1,6 @@
 import { CartesianGrid, YAxis, XAxis, Bar, LabelList, ResponsiveContainer, BarChart } from "recharts";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "../ui/chart";
-import Filters from "./Filters";
 
 
 interface AggregatedData {
@@ -24,7 +23,10 @@ const chartConfig = {
     },
   } satisfies ChartConfig
   
-export default function CategoryChart({ aggregatedData }: CategoryDataProp){
+export default function CategoryChart({ aggregatedData }: CategoryDataProp) {
+    const formatNumber = (value: number) => {
+      return value.toLocaleString('en-US');
+    };
     return(
         <Card>
           <CardHeader className="flex flex-col">
@@ -39,7 +41,7 @@ export default function CategoryChart({ aggregatedData }: CategoryDataProp){
                     <BarChart
                         data={aggregatedData}
                         layout="vertical"
-                        margin={{ right: 65 }}
+                        margin={{ left: 90, right: 65 }}
                         barCategoryGap={200}
                     >
                         <CartesianGrid horizontal={false} />
@@ -50,6 +52,7 @@ export default function CategoryChart({ aggregatedData }: CategoryDataProp){
                         tickMargin={10}
                         axisLine={false}
                         tickFormatter={(value) => value}
+                        width={100}
                         hide
                         />
                         <XAxis
@@ -59,34 +62,27 @@ export default function CategoryChart({ aggregatedData }: CategoryDataProp){
                         tickMargin={10}
                         axisLine={false}
                         domain={['auto', 'auto']}
-                        tickFormatter={(value) => value.toFixed(0)}
-                        tickCount={8}
+                        tickFormatter={(value) => formatNumber(value)}
+                        tickCount={6}
                         />
                         <ChartTooltip
                         cursor={false}
                         content={<ChartTooltipContent indicator="line" />}
                         />
                         <Bar
-                        dataKey="category_total"
-                        layout="vertical"
-                        fill="var(--color-desktop)"
-                        radius={40}
-                        stroke="#FFFFFF" 
-                        strokeWidth={2}
+                          dataKey="category_total"
+                          layout="vertical"
+                          fill="var(--color-desktop)"
+                          radius={40}
+                          stroke="#FFFFFF" 
+                          strokeWidth={2}
                         >
-                        <LabelList
+                          <LabelList
                             dataKey="category"
-                            position="insideLeft"
-                            offset={7}
-                            className="fill-foreground md:text-sm"
-                        />
-                        {/* <LabelList
-                            dataKey="category_total"
-                            position="right"
-                            offset={12}
-                            className="fill-foreground  md:text-2xl"
-                            fontSize={12}
-                        /> */}
+                            position="left"   // Adjust the position to 'left'
+                            offset={10}      // Increase offset to move labels outside the bars
+                            className="fill-foreground md:text-sm lg:text-xs"
+                          />
                         </Bar>
                     </BarChart>
                 </ResponsiveContainer>

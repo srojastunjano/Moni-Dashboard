@@ -2,8 +2,6 @@ import { Card, CardHeader } from "../ui/card"
 import FancyMultiSelect from "../ui/multiSelect";
 import Categories from "./ds-categories"
 import DatePicker from "./ds-date"
-import FixedDates from "./FixedDates"
-import Reset from "./reset";
 
 interface MenuProps {
     handleDateRangeChange: () => void;

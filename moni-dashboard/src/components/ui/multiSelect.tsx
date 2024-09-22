@@ -19,7 +19,7 @@ export default function FancyMultiSelect({selectedCategories, setSelectedCategor
   const categorias = Array.from(new Set(dummyMvt.map((mvt) => mvt.category)));
 
   const inputRef = useRef<HTMLInputElement>(null);
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   // const [selected, setSelected] = useState<String[]>([categorias[0]]);
   const [inputValue, setInputValue] = useState("");
 

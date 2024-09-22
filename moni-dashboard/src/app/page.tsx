@@ -7,14 +7,13 @@
 "use client";
 
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { IconArrowLeft, IconBrandTabler, IconSettings, IconUserBolt } from "@tabler/icons-react";
 import { JSX, SVGProps, useEffect, useState } from "react";
 import { Button } from "../components/ui/button";
 import Link from "next/link";
-import Cards from "../components/dashboard/ds-cards";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import dummyMvt from "@/lib/dummyMvt";
 import Charts from "../components/dashboard/ds-charts";
+import ChartSkeleton from "../components/dashboard/chartsSkeleton";
 
 
 
@@ -24,31 +23,24 @@ export default function Home() {
   const [filteredData, setFilteredData] = useState(dummyMvt);
   const [activeSkeleton, setActiveSkeleton] = useState<boolean>(true);
   
-    const [dateRange, setDateRange] = useState<{ startDate?: Date, endDate?: Date }>({});
-  
-    const handleDateRangeChange = (startDate?: Date, endDate?: Date) => {
-      setDateRange({ startDate, endDate });
-    };
-  
-    useEffect(() => {
-      const { startDate, endDate } = dateRange;
-      
-      let filtered = dummyMvt;
+  const [dateRange, setDateRange] = useState<{ startDate?: Date, endDate?: Date }>({});
+  const { startDate, endDate } = dateRange;
+  let filtered = dummyMvt;
+  useEffect(() => {
+    if (startDate && endDate) {
+      filtered = filtered.filter(item => {
+        const itemDate = new Date(item.date);
+        return itemDate >= startDate && itemDate <= endDate;
+      });
+    }
 
-      if (startDate && endDate) {
-        filtered = filtered.filter(item => {
-          const itemDate = new Date(item.date);
-          return itemDate >= startDate && itemDate <= endDate;
-        });
-      }
+    if (selectedCategories.length > 0) {
+      filtered = filtered.filter(item => selectedCategories.includes(item.category));
+    }
 
-      if (selectedCategories.length > 0) {
-        filtered = filtered.filter(item => selectedCategories.includes(item.category));
-      }
-
-      setFilteredData(filtered);
-      setActiveSkeleton(false);
-    }, [dateRange, selectedCategories]);
+    setFilteredData(filtered);
+    setActiveSkeleton(false);
+  }, [dateRange, selectedCategories]);
   return (
       <>
         <head>
@@ -131,16 +123,16 @@ export default function Home() {
               </div>
             </nav>
             <main className="flex-1 px-1 pt-6 md:px-7 md:pt-2">
-              <h1 className="text-customBlue text-2xl ml-2 font-bold md:text-4xl lg:ml-7 lg:mt-2 xl:text-2xl xl:ml-0">HeyMoni</h1>
+              <h1 className="text-customGreen text-2xl ml-2 font-bold md:text-2xl lg:ml-7 lg:mt-2 xl:text-2xl xl:ml-0">HeyMoni</h1>
               {activeSkeleton ?
-                <p>CARGANDO DATOS</p>  
+                <ChartSkeleton/>  
                 :  
               <Charts chartCategory={selectedCategories} data={filteredData} rawData={dummyMvt}/>
             }
             </main>
           </div>
            {/* Mobile Nav */}
-            <nav className="fixed bottom-0 z-40 py-3 flex w-full items-center justify-around border-t bg-background px-4 py-3 md:py-2 xl:hidden">
+            <nav className="fixed bottom-0 z-40 py-3 flex w-full items-center justify-around border-t bg-background px-4 py-3 md:py-2 lg:hidden">
             <Link
               href="/"
               className="flex flex-col items-center gap-1 text-muted-foreground transition-colors hover:text-foreground"

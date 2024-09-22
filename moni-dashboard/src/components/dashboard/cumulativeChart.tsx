@@ -59,6 +59,11 @@ const chartConfig = {
 export default function CumulativeChart({
   cumulativeData,
 }: CumulativeDataProp) {
+
+  const formatNumber = (value: number) => {
+    return value.toLocaleString('en-US');
+  };
+
   // Ensure cumulativeData is not empty before performing operations
   if (!cumulativeData.length) {
     return <div>No data available</div>;
@@ -96,8 +101,9 @@ export default function CumulativeChart({
                 tickMargin={10}
                 axisLine={false}
                 domain={["auto", "auto"]}
-                tickFormatter={(value) => value.toFixed(0)}
+                tickFormatter={(value) => formatNumber(value)}
                 tickCount={12}
+                width={70}
               />
               <XAxis
                 dataKey="date"

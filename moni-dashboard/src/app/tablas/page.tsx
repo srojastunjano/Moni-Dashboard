@@ -1,34 +1,21 @@
 "use client";
 
-import Categorias from "@/src/components/dashboard/ds-categories";
-import DatePicker from "@/src/components/dashboard/ds-date";
-import AlgoMal from "@/src/components/dashboard/ds-suggestions";
 import Tables from "@/src/components/dashboard/ds-table";
 import dummyMvt from "@/lib/dummyMvt";
 import Link from "next/link";
-import {
-  Menubar,
-  MenubarContent,
-  MenubarItem,
-  MenubarMenu,
-  MenubarSeparator,
-  MenubarShortcut,
-  MenubarTrigger,
-} from "@/src/components/ui/menubar"
-
 import { useState, useEffect, SVGProps } from "react";
-import { Card, CardContent, CardHeader } from "@/src/components/ui/card";
-import FixedDates from "@/src/components/dashboard/FixedDates";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/src/components/ui/button";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import Cards from "@/src/components/dashboard/ds-cards";
 import Filters from "@/src/components/dashboard/Filters";
+import TableSkeleton from "@/src/components/dashboard/tableSkeleton";
 
 export default function Home() {
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+    const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
     const [filteredData, setFilteredData] = useState(dummyMvt);
     const [dateRange, setDateRange] = useState<{ startDate?: Date, endDate?: Date }>({});
+    const [activeSkeleton, setActiveSkeleton] = useState<boolean>(true);
   
     const handleDateRangeChange = (startDate?: Date, endDate?: Date) => {
       setDateRange({ startDate, endDate });
@@ -51,6 +38,7 @@ export default function Home() {
       }
 
       setFilteredData(filtered);
+      setActiveSkeleton(false);
     }, [dateRange, selectedCategories]);
   return (
       <>
@@ -134,22 +122,24 @@ export default function Home() {
               </div>
             </nav>
             <main className="flex-1 px-4 pt-2 md:px-7">
-              <h1 className="text-customBlue text-2xl font-bold lg:ml-1 xl:ml-2">HeyMoni</h1>
-              {/* <Card>
-                <CardContent> */}
+              <h1 className="text-customGreen text-2xl font-bold lg:ml-1 xl:ml-2">HeyMoni</h1>
+              {activeSkeleton ?
+                <TableSkeleton/>  
+                :
+                <div>
                   <Cards data={filteredData} />
                   <Filters
                     handleDateRangeChange={handleDateRangeChange}
                     selectedCategories={selectedCategories}
                     setSelectedCategories={setSelectedCategories}
                   />
-                {/* </CardContent>
-              </Card> */}
-              <Tables selectedCategory={selectedCategories.length === 1 ? selectedCategories[0] : "TODAS"} data={filteredData} />
+                  <Tables selectedCategory={selectedCategories.length === 1 ? selectedCategories[0] : "TODAS"} data={filteredData} />
+                </div>
+              }
             </main>
           </div>
            {/* Mobile Nav */}
-            <nav className="fixed bottom-0 z-40 py-3 flex w-full items-center justify-around border-t bg-background px-4 py-3 md:py-2 xl:hidden">
+            <nav className="fixed bottom-0 z-40 py-3 flex w-full items-center justify-around border-t bg-background px-4 py-3 md:py-2 md:hidden">
             <Link
               href="/"
               className="flex flex-col items-center gap-1 text-muted-foreground transition-colors hover:text-foreground"

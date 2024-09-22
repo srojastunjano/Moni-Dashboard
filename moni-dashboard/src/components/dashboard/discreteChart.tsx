@@ -60,7 +60,11 @@ interface DiscreteDataProp {
 
 
 // Main component function
-export default function DiscreteChart({discreteData}:DiscreteDataProp){
+export default function DiscreteChart({ discreteData }: DiscreteDataProp) {
+  const formatNumber = (value: number) => {
+    return value.toLocaleString('en-US');
+  };
+
   if (!discreteData.length) {
     return <div>No data available</div>;
   }
@@ -97,8 +101,9 @@ export default function DiscreteChart({discreteData}:DiscreteDataProp){
                 tickMargin={10}
                 axisLine={false}
                 domain={['auto', 'auto']}
-                tickFormatter={(value) => value.toFixed(0)}
+                tickFormatter={(value) => formatNumber(value)}
                 tickCount={12}
+                width={70}
               />
               <XAxis
                  dataKey="date"
