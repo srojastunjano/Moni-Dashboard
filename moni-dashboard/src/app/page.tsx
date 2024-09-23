@@ -123,7 +123,7 @@ export default function Home() {
               </div>
             </nav>
             <main className="flex-1 px-1 pt-6 md:px-7 md:pt-2">
-              <h1 className="text-customGreen text-2xl ml-2 font-bold md:text-2xl lg:ml-7 lg:mt-2 xl:text-2xl xl:ml-0">HeyMoni</h1>
+              <h1 className="text-white text-2xl ml-2 font-bold md:text-2xl lg:ml-7 lg:mt-2 xl:text-2xl xl:ml-0">HeyMoni</h1>
               {activeSkeleton ?
                 <ChartSkeleton/>  
                 :  
@@ -186,7 +186,7 @@ function MenuIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
       height="24"
       viewBox="0 0 24 24"
       fill="none"
-      stroke="currentColor"
+      stroke="#a777b6"
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
@@ -206,7 +206,7 @@ function BarChartIcon(props: JSX.IntrinsicAttributes & React.SVGProps<SVGSVGElem
       className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 lg:w-10 lg:h-10 xl:w-5 xl:h-5"
       viewBox="0 0 24 24"
       fill="none"
-      stroke="currentColor"
+      stroke="#a777b6"
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
@@ -228,7 +228,7 @@ function TableIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
       height="24"
       viewBox="0 0 24 24"
       fill="none"
-      stroke="currentColor"
+      stroke="#a777b6"
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"

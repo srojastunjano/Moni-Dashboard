@@ -63,37 +63,32 @@ export default function Cards({data}: cardProp) {
     return (
         <div className="w-full lg:w-[100%] mx-auto">         
             <div className="flex justify-around my-2 flex-row items-center space-x-2 px-4">
-            <Card className="w-[30%] h-[100%] my-1.5 bg-white border border-gray-300 rounded-lg shadow-md">
+            <Card className="color-[#29292] w-[30%] h-[100%] my-1.5 bg-[#292929] border border-gray-300 rounded-lg shadow-md">
                 <CardHeader className="flex flex-col justify-center items-center text-center h-full">
-                    <CardTitle className="text-customColor text-md lg:text-2xl xl:text-md">Gastos</CardTitle>
+                    <CardTitle className="text-white text-md lg:text-2xl xl:text-md">Gastos</CardTitle>
                     <CardDescription className="text-sm lg:text-lg xl:text-sm flex justify-center items-center h-full">
                         {gastosTotals.toLocaleString('en-US')}
                     </CardDescription>
                 </CardHeader>
             </Card>
 
-            <Card className="w-[30%] h-[100%] my-1.5 bg-white border border-gray-300 rounded-lg shadow-md">
+            <Card className="w-[30%] h-[100%] my-1.5 bg-[#292929] border border-gray-300 rounded-lg shadow-md">
                 <CardHeader className="flex flex-col justify-center items-center text-center h-full">
-                    <CardTitle className="text-customColor text-md lg:text-2xl xl:text-md">Ingreso</CardTitle>
+                    <CardTitle className="text-white text-md lg:text-2xl xl:text-md">Ingreso</CardTitle>
                     <CardDescription className="text-sm lg:text-lg xl:text-sm flex justify-center items-center h-full">
                         {ingresos.toLocaleString('en-US')}
                     </CardDescription>
                 </CardHeader>
             </Card>
 
-            <Card className="w-[30%] h-[100%] my-1.5 bg-white border border-gray-300 rounded-lg shadow-md">
+            <Card className="w-[30%] h-[100%] my-1.5 bg-[#292929] border border-gray-300 rounded-lg shadow-md">
                 <CardHeader className="flex flex-col justify-center items-center text-center h-full">
-                    <CardTitle className="text-customColor text-md lg:text-2xl xl:text-md">Balance</CardTitle>
+                    <CardTitle className="text-white text-md lg:text-2xl xl:text-md">Balance</CardTitle>
                     <CardDescription className="text-sm lg:text-lg xl:text-sm flex justify-center items-center h-full">
                         {balance.toLocaleString('en-US')}
                     </CardDescription>
                 </CardHeader>
             </Card>
-                {/* <Menu
-                    handleDateRangeChange={handleDateRangeChange}
-                    selectedCategories={selectedCategory}
-                    setSelectedCategories={setSelectedCategory}
-                    /> */}
             </div>
         </div>
 

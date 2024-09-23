@@ -13,7 +13,7 @@ export default function Filters({handleDateRangeChange, selectedCategories, setS
     return (
         <>
             <div className="flex flex-row justify-center w-full">
-                <Card className="mt-1 justify-center w-[95%] h-auto my-1.5 bg-white border border-gray-300 rounded-lg shadow-md md:py-3 xl:py-0">
+                <Card className="mt-1 justify-center w-[95%] h-auto my-1.5 bg-[#292929] border border-gray-300 rounded-lg shadow-md md:py-3 xl:py-0">
                     <CardHeader className="p-0 space-between flex flex-col justify-center sm:flex-row">
                         {/* <FixedDates onDateRangeChange={handleDateRangeChange}/> */}
                         <div className="mx-auto">
