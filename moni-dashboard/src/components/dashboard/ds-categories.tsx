@@ -1,5 +1,5 @@
 import * as React from "react";
-import FancyMultiSelect from "../ui/multiSelect";
+import FancyMultiSelect from "../../../components/ui/multiSelect";
 
 interface CategoryProps {
   selectedCategories: string[];

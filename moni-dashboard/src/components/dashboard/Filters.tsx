@@ -1,5 +1,5 @@
-import { Card, CardHeader } from "../ui/card"
-import FancyMultiSelect from "../ui/multiSelect";
+import { Card, CardHeader } from "../../../components/ui/card"
+import FancyMultiSelect from "../../../components/ui/multiSelect";
 import Categories from "./ds-categories"
 import DatePicker from "./ds-date"
 

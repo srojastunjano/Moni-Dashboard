@@ -14,12 +14,12 @@ import {
   CardContent,
   CardHeader,
   CardTitle,
-} from "../ui/card";
+} from "../../../components/ui/card";
 import {
   ChartConfig,
   ChartContainer,
   ChartTooltipContent,
-} from "../ui/chart";
+} from "../../../components/ui/chart";
 
 interface Movement {
   PK: string;

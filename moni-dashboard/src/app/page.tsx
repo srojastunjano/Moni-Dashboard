@@ -8,7 +8,7 @@
 
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { JSX, SVGProps, useEffect, useState } from "react";
-import { Button } from "../components/ui/button";
+import { Button } from "../../components/ui/button";
 import Link from "next/link";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import dummyMvt from "@/lib/dummyMvt";
@@ -44,6 +44,7 @@ export default function Home() {
   return (
       <>
         <head>
+          <title>HeyMoni</title>
           <title>HeyMoni</title>
         </head>
         <body>

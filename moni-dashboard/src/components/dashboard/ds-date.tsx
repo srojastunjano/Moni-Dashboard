@@ -4,13 +4,13 @@ import * as React from "react"
 import { CalendarIcon } from "@radix-ui/react-icons"
 import { format } from "date-fns"
 import { cn } from "@/lib/utils"
-import { Button } from "@/src/components/ui/button"
-import { Popover, PopoverContent, PopoverTrigger } from "@/src/components/ui/popover"
+import { Button } from "@/components/ui/button"
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import 'react-date-range/dist/styles.css'
 import 'react-date-range/dist/theme/default.css'
 import { useState } from 'react'
 import { RangeKeyDict } from 'react-date-range'
-import { DateRangePicker } from "../ui/DateRangePicker"
+import { DateRangePicker } from "../../../components/ui/DateRangePicker"
 import { DateRange } from "react-day-picker"
 
 interface DatePickerProps {

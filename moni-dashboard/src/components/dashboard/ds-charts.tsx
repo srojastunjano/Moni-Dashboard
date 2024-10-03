@@ -1,10 +1,10 @@
 "use client";
 import {
   Card,
-} from "@/src/components/ui/card";
+} from "@/components/ui/card";
 import {
   ChartConfig,
-} from "@/src/components/ui/chart";
+} from "@/components/ui/chart";
 import { useState, useEffect } from "react";
 import { DiscreteChart } from "./discreteChart";
 import { Filters } from "./Filters";
