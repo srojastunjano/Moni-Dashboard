@@ -20,7 +20,6 @@ interface SidebarContextProps {
 const SidebarContext = createContext<SidebarContextProps | undefined>(
   undefined
 );
-
 export const useSidebar = () => {
   const context = useContext(SidebarContext);
   if (!context) {

@@ -32,8 +32,8 @@ export interface DateRangePickerProps {
   showCompare?: boolean
 }
 
-const formatDate = (date: Date, locale: string = 'en-us'): string => {
-  return date.toLocaleDateString(locale, {
+const formatDate = (date: Date, locale: string = 'es-ES'): string => {
+  return date.toLocaleDateString("es-ES", {
     month: 'short',
     day: 'numeric',
     year: 'numeric'
@@ -87,7 +87,6 @@ export const DateRangePicker: FC<DateRangePickerProps> & {
   initialCompareTo,
   onUpdate,
   align = 'end',
-  locale = 'es-CL',
   showCompare = true
 }): JSX.Element => {
   const [isOpen, setIsOpen] = useState(false)
@@ -183,9 +182,8 @@ export const DateRangePicker: FC<DateRangePickerProps> & {
         to.setHours(23, 59, 59, 999)
         break
       case 'reset':
-        from.setDate(from.getMonth() - 9000)  // To do: change this for the date in which the user got the
+        from.setMonth(from.getMonth() - 3)// To do: change this for the date in which the user got the app
         from.setHours(0, 0, 0, 0)
-        // to.setDate(to.getDate() - 1)
         to.setHours(23, 59, 59, 999)
         break
     }
@@ -336,16 +334,16 @@ export const DateRangePicker: FC<DateRangePickerProps> & {
         <Button className="outline-none border-0 ring-0 focus:ring-0 mx-3 text-xs flex items-center justify-center mt-2 ml:10 lg:text-lg xl:text-base" variant="outline">
           <div className="text-right">
             <div className="py-1">
-              <div>{`${formatDate(range.from, locale)}${
-                range.to != null ? ' - ' + formatDate(range.to, locale) : ''
+              <div>{`${formatDate(range.from, "es-ES")}${
+                range.to != null ? ' - ' + formatDate(range.to, "es-ES") : ''
               }`}</div>
             </div>
             {rangeCompare != null && (
               <div className="opacity-60 text-xs -mt-1">
                 <>
-                  vs. {formatDate(rangeCompare.from, locale)}
+                  vs. {formatDate(rangeCompare.from, "es-ES")}
                   {rangeCompare.to != null
-                    ? ` - ${formatDate(rangeCompare.to, locale)}`
+                    ? ` - ${formatDate(rangeCompare.to, "es-ES")}`
                     : ''}
                 </>
               </div>

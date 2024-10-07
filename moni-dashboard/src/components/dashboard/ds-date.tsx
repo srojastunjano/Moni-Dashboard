@@ -27,8 +27,8 @@ export default function DatePicker({ onDateRangeChange }: DatePickerProps) {
   return (
     <DateRangePicker
       onUpdate={(values) => handleDateRangeChange(values)} 
-      initialDateFrom="2022-01-01"
-      initialDateTo="2030-12-31"
+      initialDateFrom="2024-07-07"
+      initialDateTo="2024-10-07"
       align="start"
       locale="en-GB"
       showCompare={false}
